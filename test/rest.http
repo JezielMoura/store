@@ -1,0 +1,21 @@
+POST https://localhost:5000/api/order HTTP/1.1
+content-type: application/json
+
+{
+    "items": [
+        {
+            "price": 10,
+            "quantity": 2,
+            "discount": 10,
+            "maxDiscount": 10,
+            "productId": "cef649da-736b-41a1-be58-35423163de23"
+        }
+    ]
+}
+
+###
+
+GET https://localhost:5000/api/order HTTP/1.1
+###
+
+GET https://localhost:5000/api/order/d9f17337-bfb0-4763-8b7a-a7d22284e7bb HTTP/1.1

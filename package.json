@@ -1,0 +1,16 @@
+{
+  "name": "store",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "svelte-kit dev",
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "preview": "svelte-kit preview"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^1.0.0-next.17",
+    "@sveltejs/kit": "next",
+    "svelte": "^3.34.0"
+  },
+  "type": "module"
+}
