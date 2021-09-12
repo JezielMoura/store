@@ -3,6 +3,10 @@
     import Nav from "../components/nav.svelte";
 </script>
 
+<svelte:head>
+    <title>Mobnet Store</title>
+</svelte:head>
+
 <Header/>
 <Nav/>
 <main>

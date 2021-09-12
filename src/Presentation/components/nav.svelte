@@ -12,19 +12,19 @@ import NavItem from "./navitem.svelte";
     </Navitem>
     <Navitem title="Produtos" icon="box-open-solid.svg">
         <a href="/products/add">Novo</a>
-        <a href="/products/add">Editar</a>
+        <a href="/products/edit">Editar</a>
         <a href="/products/delete">Excluir</a>
     </Navitem>
     <Navitem title="Relatórios" icon="chart-area-solid.svg">
-        <a href="/report/orders">Vendas</a>
+        <a href="/reports/orders">Vendas</a>
     </Navitem>
     <Navitem title="Caixa" icon="coins-solid.svg">
-        <a href="/boxs">Abrir/Fechar</a>
+        <a href="/boxs/open">Abrir/Fechar</a>
         <a href="/boxs/details">Ver</a>
     </Navitem>
     <Navitem title="Contas" icon="wallet-solid.svg">
-        <a href="/account/receive">A Receber</a>
-        <a href="/account/pay">A Pagar</a>
+        <a href="/accounts/receive">A Receber</a>
+        <a href="/accounts/pay">A Pagar</a>
     </Navitem>
     <Navitem title="Sair" icon="times-circle-solid.svg" href="#">
     </Navitem>
