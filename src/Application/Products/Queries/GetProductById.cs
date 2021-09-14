@@ -3,12 +3,13 @@ namespace Mobnet.Store.Application.Products.Queries;
 using MediatR;
 using Mobnet.Store.Domain.Entities;
 using Mobnet.Store.Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 public class GetProductById : IRequest<Product>
 {
-    public Guid Id { get; set; }
+    public long Code { get; set; }
 }
 
 public class GetProductByIdHandler : IRequestHandler<GetProductById, Product>
@@ -24,6 +25,6 @@ public class GetProductByIdHandler : IRequestHandler<GetProductById, Product>
 
     public async Task<Product> Handle(GetProductById request, CancellationToken token)
     {
-        return await Task.FromResult(_context.Products.Find(request.Id));
+        return await _context.Products.FirstOrDefaultAsync(c => c.Code == request.Code);
     }
 }

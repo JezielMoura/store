@@ -27,5 +27,5 @@
             width: 40px; height: 40px; margin-right: 30px; border-radius: 100%; }
 
         header .box-search { 
-            border: 1px solid #ccc; width: 50%; padding: 7px 15px; border-radius: 5px;}
+            width: 50%;}
 </style>

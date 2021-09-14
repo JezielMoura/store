@@ -8,7 +8,6 @@ global using Mobnet.Store.Application.Products.Commands;
 global using Mobnet.Store.Application.Products.Queries;
 global using Mobnet.Store.Domain.Entities;
 global using System.Text.Json.Serialization;
-global using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +23,9 @@ builder.Services.AddInfrastructure();
 builder.Services.AddControllers().AddJsonOptions(options 
     => options.JsonSerializerOptions.ReferenceHandler  = ReferenceHandler.IgnoreCycles);
 
+builder.Services.AddCors();
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c 
     => c.SwaggerDoc("v1", new() { Title = "Mobnet Store", Version = "v1" }));
 
@@ -36,6 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureExceptionHandler();
+app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(o => true));
 app.UseRouting();
 app.UseEndpoints(route => route.MapControllers());
 

@@ -1,7 +1,7 @@
 namespace Mobnet.Store.Presentaion.Controllers;
 
 [ApiController]
-[Route("/api/product")]
+[Route("/api/product/")]
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -13,16 +13,16 @@ public class ProductController : ControllerBase
     public async Task<IEnumerable<Product>> GetAll()
         => await _mediator.Send(new GetAllProducts());
 
-    [HttpGet("{id}")]
-    public async Task<Product> Get([FromRoute] Guid id)
-        => await _mediator.Send(new GetProductById {Id = id });
+    [HttpGet("{code}")]
+    public async Task<ActionResult<Product>> Get(long code)
+        => await _mediator.Send(new GetProductById {Code = code });
 
     [HttpPost]
-    public async Task Add([FromRoute] AddProduct command)
+    public async Task Add([FromBody] AddProduct command)
         => await _mediator.Send(command);
 
     [HttpPut]
-    public async Task Edit([FromRoute] EditProduct command)
+    public async Task Edit([FromBody] EditProduct command)
         => await _mediator.Send(command);
 
     [HttpDelete("{id}")]
