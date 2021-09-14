@@ -94,7 +94,7 @@
                 font-size: 12px; font-weight: 500;}
 
         .items { 
-            width: 68%; margin-left: 2%; background: #fff; height: 435px; border-radius: 5px;}
+            width: 68%; margin-left: 2%; background: #fff; height: 435px; border-radius: 5px; padding: 15px 20px;}
 
         .value { 
             width: 100%; height: 80px; background: #3975EA; border-radius: 5px; margin-top: 20px;}
