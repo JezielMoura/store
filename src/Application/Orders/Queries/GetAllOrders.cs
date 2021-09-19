@@ -1,5 +1,6 @@
 namespace Mobnet.Store.Application.Orders.Queries;
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;

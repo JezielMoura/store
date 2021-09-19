@@ -1,6 +1,8 @@
 namespace Mobnet.Store.Application.Orders.Commands;
-
-using Ardalis.GuardClauses;
+#nullable disable
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Mobnet.Store.Application.Common.Interfaces;
 using Mobnet.Store.Domain.Entities;
@@ -21,8 +23,6 @@ public class ProcessOrderHandler : AsyncRequestHandler<ProcessOrder>
         foreach (var item in command.Items)
         {
             var product = _context.Products.Find(item.ProductId);
-
-            Guard.Against.Null(product, nameof(product));
 
             product.RetireStock(item.Quantity);
             order.AddItem(item);

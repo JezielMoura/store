@@ -1,3 +1,5 @@
+using System;
+
 namespace Mobnet.Store.Domain.Entities;
 
 #nullable disable

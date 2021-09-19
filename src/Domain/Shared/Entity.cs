@@ -1,4 +1,5 @@
 global using Mobnet.Store.Domain.Shared;
+using System;
 
 namespace Mobnet.Store.Domain.Shared;
 

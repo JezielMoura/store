@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Mobnet.Store.Application.Common.Interfaces;
 using Mobnet.Store.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace Mobnet.Store.Infrastructure.Extensions;
 
