@@ -6,7 +6,7 @@
     <NavItem href="/" title="Home" icon="home-solid.svg"/>
     <NavItem title="Vendas" icon="shopping-cart-solid.svg">
         <a href="/orders/add">Nova</a>
-        <a href="/orders/now">Relizadas</a>
+        <a href="/orders/today">Relizadas</a>
     </NavItem>
     <NavItem title="Produtos" icon="box-open-solid.svg">
         <a href="/products/add">Novo</a>

@@ -11,8 +11,13 @@
             productId: product.id,
             code: product.code,
             name: product.name,
+            description: product.name,
+            purchasePrice: product.purchasePrice,
             price: product.price,
             discount: product.maxDiscount,
+            maxDiscount: product.maxDiscount,
+            stock: product.stock,
+            stockMin: product.stockMin,
             quantity: 1,
             total: product.price
         }
@@ -25,15 +30,17 @@
         <div class="product">
             <p class="w1">Código</p>
             <p class="w2">Nome</p>
-            <p class="w3">Preço</p>
+            <p class="w3">Preço de Compra</p>
+            <p class="w3">Preço de Venda</p>
             <p class="w4">Desc Máximo</p>
             <p class="w5">Estoque</p>
-            <p class="w5">Estoque</p>
+            <p class="w5">Estoque Mínimo</p>
         </div>
         {#each searchProducts as product}
             <div class="product body" on:click={() => select(product)}>
                 <p class="w1">{product.code}</p>
                 <p class="w2">{product.name} {product.description}</p>
+                <p class="w3">{currency(product.purchasePrice)}</p>
                 <p class="w3">{currency(product.price)}</p>
                 <p class="w4">{product.maxDiscount}%</p>
                 <p class="w5">{product.stock}</p>
@@ -62,8 +69,8 @@
                     width: 10%;}
 
                 .product .w2 { 
-                    width: 40%;}
+                    width: 28%;}
 
                 .product .w3, .product .w4, .product .w5, .product .w6 { 
-                    width: 12%; }
+                    width: 11%; }
 </style>

@@ -15,5 +15,20 @@ public class ProductMap : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Price).HasPrecision(10, 2);
         builder.Property(p => p.PurchasePrice).HasPrecision(10, 2);
         builder.Property(p => p.MaxDiscount).HasPrecision(10, 2);
+
+        builder
+            .Property(c => c.Price)
+            .HasColumnType("decimal")
+            .HasPrecision(18, 2);
+
+        builder
+            .Property(c => c.Stock)
+            .HasColumnType("decimal")
+            .HasPrecision(18, 2);
+
+        builder
+            .Property(c => c.StockMin)
+            .HasColumnType("decimal")
+            .HasPrecision(18, 2);
     }
 }

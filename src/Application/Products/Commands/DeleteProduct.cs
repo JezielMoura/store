@@ -4,10 +4,11 @@ using Mobnet.Store.Application.Common.Interfaces;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using System.Linq;
 
 namespace Mobnet.Store.Application.Products.Commands;
 
-public record DeleteProduct (Guid Id) : IRequest;
+public record DeleteProduct (long Code) : IRequest;
 
 public class DeleteProductHandler : AsyncRequestHandler<DeleteProduct>
 {
@@ -21,7 +22,7 @@ public class DeleteProductHandler : AsyncRequestHandler<DeleteProduct>
     }
     protected override async Task Handle(DeleteProduct command, CancellationToken token)
     {
-        var product = _context.Products.Find(command.Id);
+        var product = _context.Products.FirstOrDefault(c => c.Code == command.Code);
 
         if (product is not null)
         {

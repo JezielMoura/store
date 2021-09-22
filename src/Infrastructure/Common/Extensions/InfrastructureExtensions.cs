@@ -16,7 +16,7 @@ public static class InfrastructureExtensions
     public static void AddInfrastructure(this IServiceCollection services)
     {
             services.AddDbContext<StoreContext>(options =>  
-                options.UseNpgsql("Server=127.0.0.1; Database=store; User Id=postgres; Password=mbnt1645;", 
+                options.UseSqlServer("Server=mbnt.tech; Database=store; User Id=sa; Password=@Mbnt1645#$;", 
                     builder => builder.MigrationsAssembly("Mobnet.Store.Infrastructure"))
             );
 

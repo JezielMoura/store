@@ -1,5 +1,6 @@
 namespace Mobnet.Store.Application.Orders.Commands;
-#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +8,11 @@ using MediatR;
 using Mobnet.Store.Application.Common.Interfaces;
 using Mobnet.Store.Domain.Entities;
 
-public record ProcessOrder(IEnumerable<OrderItem> Items) : IRequest;
+public class ProcessOrder : IRequest
+{
+    public List<OrderItem> Items { get; set; } = new();
+    public decimal Valor { get; set;}
+}
 
 public class ProcessOrderHandler : AsyncRequestHandler<ProcessOrder>
 {
@@ -24,10 +29,13 @@ public class ProcessOrderHandler : AsyncRequestHandler<ProcessOrder>
         {
             var product = _context.Products.Find(item.ProductId);
 
-            product.RetireStock(item.Quantity);
-            order.AddItem(item);
+            if (product is not null)
+            {
+                product.RetireStock(item.Quantity);
+                _context.Products.Update(product);
+            }
 
-            _context.Products.Update(product);
+            order.AddItem(item);
         }
 
         _context.Orders.Add(order);

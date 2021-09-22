@@ -7,7 +7,7 @@ public class DeleteProductValidation : AbstractValidator<DeleteProduct>
 {
     public DeleteProductValidation()
     {
-        RuleFor(v => v.Id)
+        RuleFor(v => v.Code)
             .NotEmpty()
             .OverridePropertyName("Identificador")
             .WithMessage("O Identificador é obrigatório");

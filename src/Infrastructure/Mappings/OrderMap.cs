@@ -11,6 +11,8 @@ public class OrderMap : IEntityTypeConfiguration<Order>
         builder.HasKey(m => m.Id);
         builder.Property(p => p.Id).ValueGeneratedNever();
 
+        builder.Property(c => c.Value).HasColumnType("decimal").HasPrecision(18, 2);
+
         builder.HasMany(p => p.Items).WithOne(p => p.Order).HasForeignKey(fk => fk.OrderId);
     }
 }

@@ -8,10 +8,11 @@ public class OrderItem : Entity
 {
     protected OrderItem() {}
     
-    public OrderItem(Guid productId, Guid orderId, decimal price, decimal quantity, decimal maxDiscount, decimal discount)
+    public OrderItem(Guid productId, Guid orderId, string name, decimal price, decimal quantity, decimal maxDiscount, decimal discount)
     {
         ProductId = productId;
         OrderId = orderId;
+        Name = name;
         Quantity = quantity;
         MaxDiscount = maxDiscount;
         Discount = discount;
@@ -20,6 +21,7 @@ public class OrderItem : Entity
         Order = new();
     } 
 
+    public string Name { get; private set; }
     public decimal Price { get; private set; }
     public decimal Quantity { get; private set; }
     public decimal Discount { get; private set; }
@@ -27,8 +29,8 @@ public class OrderItem : Entity
     public decimal Total { get; private set; }
     public Guid ProductId { get; private set; }
     public Guid OrderId { get; private set; }
-    public virtual Product Product { get; private set; }
-    public virtual Order Order { get; private set; }
+    public virtual Product Product { get; set; }
+    public virtual Order Order { get; set; }
 
     public void ApplyDiscount()
     {

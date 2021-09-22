@@ -2,38 +2,42 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mobnet.Store.Infrastructure.Persistence;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Mobnet.Store.Infrastructure.persistence.migrations
+#nullable disable
+
+namespace Mobnet.Store.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20210913230453_init-desktop")]
-    partial class initdesktop
+    [Migration("20210919185032_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "6.0.0-preview.7.21378.4")
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                .HasAnnotation("ProductVersion", "6.0.0-rc.1.21452.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Mobnet.Store.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("LastModified")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -43,34 +47,39 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
             modelBuilder.Entity("Mobnet.Store.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Discount")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("LastModified")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("MaxDiscount")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("OrderId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -84,44 +93,46 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
             modelBuilder.Entity("Mobnet.Store.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Code")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(120)
-                        .HasColumnType("character varying(120)");
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<DateTime>("LastModified")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("MaxDiscount")
                         .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(90)
-                        .HasColumnType("character varying(90)");
+                        .HasColumnType("nvarchar(90)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<decimal>("Stock")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("StockMin")
-                        .HasColumnType("numeric");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -130,7 +141,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("17a20e63-32a2-4977-9909-329a7f3c1cfc"),
+                            Id = new Guid("ce04b782-d408-4ff4-b6ec-d195532fb1e1"),
                             Code = 1L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -144,7 +155,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("160a9220-a423-411a-93a7-a71b61ecea13"),
+                            Id = new Guid("d882f561-e615-450c-adb8-4fd2e55cfc71"),
                             Code = 2L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Preto",
@@ -158,7 +169,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("1f905b97-bc23-4703-9cd9-f37e916c2cf3"),
+                            Id = new Guid("845a2abb-8eae-49b4-b9c1-daf199c4af30"),
                             Code = 3L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -172,7 +183,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("0aca8a22-672f-4cbd-8b20-666eabcb8543"),
+                            Id = new Guid("c19fffc4-0820-4a69-8d3c-4a0d7c1222bf"),
                             Code = 4L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -186,7 +197,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("508d1dfc-a9a5-433a-8be5-d2506b9c9397"),
+                            Id = new Guid("c2e5d554-691b-44e4-b20b-392f0398e85f"),
                             Code = 5L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -200,7 +211,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("acd30637-92de-4934-8afd-ca8ecad060be"),
+                            Id = new Guid("1c85699c-e881-4375-9dc6-dc0f30b56a7d"),
                             Code = 6L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -214,7 +225,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("ea632815-3136-4d4d-95bc-9a65ccdeffad"),
+                            Id = new Guid("fb623a4d-5e59-4e59-9633-eef4fb6d80a4"),
                             Code = 7L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
@@ -228,7 +239,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("2ecae2fc-ba62-44b3-b779-e19ec95418d4"),
+                            Id = new Guid("7113137d-317e-4679-8530-f67b4a59d0f9"),
                             Code = 8L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Pequena",
@@ -242,7 +253,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("72904c7f-8501-4ca2-ba31-d99921b296bc"),
+                            Id = new Guid("cc714244-79b4-46ab-b93b-fe6b2897ee1c"),
                             Code = 9L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "M",
@@ -256,7 +267,7 @@ namespace Mobnet.Store.Infrastructure.persistence.migrations
                         },
                         new
                         {
-                            Id = new Guid("577d2cb6-028b-4c86-bae2-7ba391ece741"),
+                            Id = new Guid("89a8f1e7-c5ac-4310-a0d7-1cf322ef2a33"),
                             Code = 10L,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "M",

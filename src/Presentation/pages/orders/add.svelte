@@ -6,7 +6,7 @@
     import OrdersService  from '../../services/orders-service.js'
     import ProductService  from '../../services/product.service.js'
 
-    let codeRef, discountRef, quantityRef;
+    let codeRef, discountRef, quantityRef, productPrice;
 
     let order = {
         item: {
@@ -26,12 +26,15 @@
     const search = async () => {
         if (isDigit(order.item.code)) {
             let product = await ProductService.find(order.item.code)
+            
             order.item.productId = product.id;
-            order.item.name = product.name;
+            order.item.name = `${product.name} ${product.description}`;
             order.item.price = product.price;
             order.item.discount = product.maxDiscount;
             order.item.quantity = 1
             order.item.total = product.price;
+
+            productPrice = product.price;
             discountRef.select();
             discountRef.focus();
         } else {
@@ -40,9 +43,9 @@
     }
 
     const applyDiscount = () => {
-        let discount = (order.item.price * order.item.discount) / 100;
-        order.item.price = order.item.price - discount;
-        order.item.total = order.item.price
+        let discount = (productPrice * order.item.discount) / 100;
+        order.item.price = productPrice - discount;
+        order.item.total = order.item.price;
         quantityRef.select();
         quantityRef.focus();
     }
@@ -65,6 +68,8 @@
     
     const selectItem = (item) => {
         order.item = item;
+        order.item.name = `${item.name} ${item.description}`;
+        productPrice = item.price;
         order.searchProducts = [];
         discountRef.select();
         discountRef.focus();
@@ -89,8 +94,17 @@
         codeRef.focus();
     }
 
-    const finalize = () => {
-        console.log(order)
+    const finalize = async () => {
+        let postOrder = {
+            valor: order.total,
+            items: order.items
+        }
+        let sucess = await OrdersService.send(postOrder);
+
+        if (sucess)
+            cancel();
+        else
+            alert("Erro ao processar venda");
     }
 </script>
 
@@ -149,9 +163,6 @@
 
         .controls { 
             width: 30%; padding: 10px 20px; background: #fff; border-radius: 5px; height: 460px;}
-
-            .controls label { 
-                font-size: 12px; font-weight: 500;}
 
         .order-items { 
             width: 68%; margin-left: 2%; background: #fff; height: 460px; border-radius: 5px; padding: 15px 20px;}

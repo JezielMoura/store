@@ -26,6 +26,10 @@ public class OrderController : ControllerBase
     public async Task<Order> Get(Guid id)
         => await _mediator.Send(new GetOrderById(id));
 
+    [HttpGet("today")]
+    public async Task<IEnumerable<Order>> Today()
+        => await _mediator.Send(new GetOrderToday());
+
     [HttpPost]
     public async Task Add(ProcessOrder command)
         => await _mediator.Send(command);

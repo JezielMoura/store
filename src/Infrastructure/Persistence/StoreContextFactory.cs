@@ -10,7 +10,7 @@ public class StoreContextFactory : IDesignTimeDbContextFactory<StoreContext>
         var optionsBuilder = new DbContextOptionsBuilder<StoreContext>();
 
         optionsBuilder.EnableSensitiveDataLogging(true);
-        optionsBuilder.UseNpgsql("Server=127.0.0.1; Database=store; User Id=postgres; Password=mbnt1645;");
+        optionsBuilder.UseSqlServer("Server=mbnt.tech; Database=store; User Id=SA; Password=@Mbnt1645#$;");
 
         return new StoreContext(optionsBuilder.Options);
     }

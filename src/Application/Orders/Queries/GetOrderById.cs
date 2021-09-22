@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -22,8 +23,8 @@ public class GetOrderByIdHandler : IRequestHandler<GetOrderById, Order>
     public async Task<Order> Handle(GetOrderById request, CancellationToken cancellationToken)
     {
         return await _context.Orders
-            .Include(c => c.Items)
-            .ThenInclude(c => c.Product)
-            .FirstOrDefaultAsync(c => c.Id ==  request.id);
+            .Include(order => order.Items)
+            .FirstOrDefaultAsync(c => c.Id == request.id);
+
     }
 }

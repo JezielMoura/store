@@ -1,15 +1,35 @@
+import url from '../helpers/url';
+
 let ordersService = {
-    find: async (code) => {
-        let response = await fetch(`//localhost:5000/api/product/${code}`)
-        let item = await response.json();
+    send: async (items) => {
+        let response = await fetch(`${url}/order`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(items),
+            mode: 'cors'
+        })
+        let sucess = response.status == 200;
         
-        item.total = item.price;
-        item.quantity  = 1
-        
-        return item
+        return sucess;
     },
-    search:  (description) => {
-        alert("Search")
+    get: async (id) => {
+        let response =  await fetch(`${url}/order/${id}`);
+
+        if (response.status ==  200)
+            return await response.json();
+
+        return null;
+    },
+    today: async () => {
+        let response =  await fetch(`${url}/order/today`);
+        let ordersToday = [];
+
+        if (response.status ==  200)
+            ordersToday = await response.json();
+
+        return ordersToday;
     }
 }
 

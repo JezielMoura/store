@@ -20,13 +20,21 @@ builder.Services.AddInfrastructure();
 builder.Services.AddControllers().AddJsonOptions(options 
     => options.JsonSerializerOptions.ReferenceHandler  = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddCors();
+builder.Services.AddCors( options =>
+    options.AddPolicy("Cors", builder => builder
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed(o => true)
+        .AllowCredentials()
+    )
+);
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c 
     => c.SwaggerDoc("v1", new() { Title = "Mobnet Store", Version = "v1" }));
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,8 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mobnet Store"));
 }
 
+app.UseCors("Cors");
 app.ConfigureExceptionHandler();
-app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(o => true));
 app.UseRouting();
 app.UseEndpoints(route => route.MapControllers());
 

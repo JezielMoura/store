@@ -1,6 +1,10 @@
 import urlBase from "../helpers/url";
 
 let ProductService = {
+    all: async () => {
+        let response = await fetch(`${urlBase}/product`)
+        return await response.json();
+    },
     find: async (code) => {
         let response = await fetch(`${urlBase}/product/${code}`)
         return await response.json();
@@ -10,7 +14,45 @@ let ProductService = {
         if (response.status == 200) 
             return await response.json();
 
+        alert("Nenhum produto encontrado");
+        
         return [];
+    },
+    add: async (product) => {
+        let response = await fetch(`${urlBase}/product`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            method: 'post',
+            body: JSON.stringify(product)
+        });
+
+        if (response.status == 200) {
+            alert("Produto adicionado");
+        }
+    },
+    edit: async (product) => {
+        let response = await fetch(`${urlBase}/product`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            method: 'put',
+            body: JSON.stringify(product)
+        });
+
+        if (response.status == 200) {
+            alert("Produto adicionado");
+        }
+    },
+    delete: async (id) => {
+        let response = await fetch(`${urlBase}/product/delete/${id}`);
+
+        if (response.status == 200)
+            return true
+        
+        return false;
     }
 }
 

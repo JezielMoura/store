@@ -21,8 +21,6 @@ public class GetAllOrdersHandler : IRequestHandler<GetAllOrders, IEnumerable<Ord
 
     public async Task<IEnumerable<Order>> Handle(GetAllOrders request, CancellationToken cancellationToken)
     {
-        var orders = await _context.Orders.Include(c => c.Items).ToListAsync();
-
-        return orders;
+        return await _context.Orders.Include(c => c.Items).ToListAsync();
     }
 }
