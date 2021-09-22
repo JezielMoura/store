@@ -11,7 +11,6 @@
     <NavItem title="Produtos" icon="box-open-solid.svg">
         <a href="/products/add">Novo</a>
         <a href="/products/edit">Editar</a>
-        <a href="/products/delete">Excluir</a>
     </NavItem>
     <NavItem title="Relatórios" icon="chart-area-solid.svg">
         <a href="/reports/orders">Vendas por período</a>
