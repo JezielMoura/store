@@ -1,0 +1,18 @@
+name: BuildAndRelease
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker Build
+      run: docker build -t cr.mbnt.tech/store .
+    - name: Docker Login
+      run: docker login cr.mbnt.tech -u mobnet -p mbnt1645
+    - name: Docker Push
+      run: docker push cr.mbnt.tech/store:latest
