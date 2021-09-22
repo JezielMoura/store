@@ -14,7 +14,7 @@
         <a href="/products/delete">Excluir</a>
     </NavItem>
     <NavItem title="Relatórios" icon="chart-area-solid.svg">
-        <a href="/reports/orders">Vendas</a>
+        <a href="/reports/orders">Vendas por período</a>
     </NavItem>
     <NavItem title="Caixa" icon="coins-solid.svg">
         <a href="/boxs/open">Abrir/Fechar</a>
