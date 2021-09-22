@@ -1,3 +1,3 @@
-const url = "https://localhost:5001/api";
+const url = "https://store.mbnt.tech/api";
 
 export default url;
