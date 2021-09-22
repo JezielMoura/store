@@ -1,5 +1,5 @@
 <script>
-    import NavItem from "./navItemm.svelte";
+    import NavItem from "./navItem.svelte";
 </script>
 <nav>
     <h1>Mobnet</h1>
