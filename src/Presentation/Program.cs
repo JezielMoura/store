@@ -44,6 +44,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("Cors");
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.ConfigureExceptionHandler();
 app.UseRouting();
 app.UseEndpoints(route => route.MapControllers());
