@@ -54,7 +54,7 @@
 <style>
     .products-list { 
         width: 90%; background: #fff; height: 460px; border-radius: 5px; padding: 15px 20px;
-    position: absolute; top: 130px; left: 5%; box-shadow: 0 0 10px #777; }
+    position: absolute; top: 130px; left: 5%; box-shadow: 0 0 10px #777; overflow: scroll; }
 
         .product { 
             width: 100%; border-bottom: 1px solid #eee; padding: 3px 5px; }
