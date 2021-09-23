@@ -20,6 +20,10 @@
         products = await ProductService.search(term)
     }
 
+    const all = async () => {
+        products =  await ProductService.all();
+    }
+
     const selectProduct = async (p) => {
         product = await ProductService.find(p.code)
         products = [];
@@ -73,6 +77,7 @@
 <div class="products">
     <InputText bind:field={term} on:enter={search} showLabel={false} name="Procurar Produto"/>
     <button on:click={search}>BUSCAR</button>
+    <button on:click={all}>MOSTRAR TODOS</button>
 </div>
 
 <div class="controls">
