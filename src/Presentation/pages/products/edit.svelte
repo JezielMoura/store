@@ -8,7 +8,7 @@
     let term = "";
 
     let product = {
-        code: 0, name: '', description: '', purchasePrice: 0.00, price: 0.00, maxDiscount: 0.00, stock: 0.00, stockMin: 0.00
+        id: '', code: 0, name: '', description: '', purchasePrice: 0.00, price: 0.00, maxDiscount: 0.00, stock: 0.00, stockMin: 0.00
     }
 
     const handleKeydown = (e) => {
@@ -20,8 +20,8 @@
         products = await ProductService.search(term)
     }
 
-    const selectProduct = (p) => {
-        product = p;
+    const selectProduct = async (p) => {
+        product = await ProductService.find(p.code)
         products = [];
     }
 
@@ -34,18 +34,35 @@
     }
 
     const exclude = async () => {
-        let sucess = await ProductService.delete(product.code)
+        let conf = confirm(`Deseja mesmo excluir o produto ${product.name}?`);
+        let sucess = false;
+
+        if (conf) {
+            sucess = await ProductService.delete(product.code)
+        }
 
         if (sucess) {
+            alert("Produto excluido");
             cancel();
         } else {
             alert("Erro ao tentar excluir produto");
         }
     }
 
-    const save = () => {
-        ProductService.add(product);
-        cancel();
+    const save = async () => {
+        let conf = confirm(`Deseja mesmo alterar o produto ${product.name}?`);
+        let sucess = false;
+        
+        if (conf) {
+            sucess = await ProductService.edit(product)
+        }
+
+        if (sucess) {
+            alert("Produto alterado");
+            cancel();
+        } else {
+            alert("Erro ao tentar alterar produto");
+        }
     }
 </script>
 

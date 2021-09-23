@@ -30,6 +30,10 @@ public class OrderController : ControllerBase
     public async Task<IEnumerable<Order>> Today()
         => await _mediator.Send(new GetOrderToday());
 
+    [HttpGet("{init}/{end}")]
+    public async Task<IEnumerable<Order>> GetByRangeDate(DateTime init, DateTime end)
+        => await _mediator.Send(new GetOrderByRangeDate(init, end));
+
     [HttpPost]
     public async Task Add(ProcessOrder command)
         => await _mediator.Send(command);

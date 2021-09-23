@@ -29,7 +29,7 @@ let ProductService = {
         });
 
         if (response.status == 200) {
-            alert("Produto adicionado");
+            return true
         }
     },
     edit: async (product) => {
@@ -43,7 +43,7 @@ let ProductService = {
         });
 
         if (response.status == 200) {
-            alert("Produto adicionado");
+            return true
         }
     },
     delete: async (id) => {
