@@ -30,6 +30,15 @@ let ordersService = {
             ordersToday = await response.json();
 
         return ordersToday;
+    },
+    getByRangeDate: async (init, end) => {
+        let response =  await fetch(`${url}/order/${init}/${end}`);
+        let ordersByRangeDate = [];
+
+        if (response.status ==  200)
+            ordersByRangeDate = await response.json();
+
+        return ordersByRangeDate;
     }
 }
 

@@ -3,23 +3,12 @@
     import date from "../../helpers/date.js";
     import OrderService from '../../services/orders-service.js';
     import InputDate from '../../components/inputDate.svelte';
-    import { onMount } from "svelte";
 
     let orders = [];
     let totalValue = 0.00;
     let selectedOrder;
     let init;
     let end;
-
-    onMount(async () => {
-        orders = await OrderService.today();
-
-        totalValue = 0.00;
-
-        for (let i = 0; i < orders.length; i++) {
-            totalValue = totalValue + orders[i].value;
-        }
-    })
 
     const handleKeydown = (e) => {
         if (e.key == 'Escape') 
@@ -30,15 +19,26 @@
         selectedOrder = await OrderService.get(order.id);
         console.log(selectedOrder)
     }
+
+    const processHandler = async () => {
+        orders = await OrderService.getByRangeDate(init, end);
+
+        totalValue = 0.00;
+
+        for (let i = 0; i < orders.length; i++) {
+            totalValue = totalValue + orders[i].value;
+        }
+    }
+
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 <p class="title">Vendas do Dia</p>
 
-<InputDate bind:field={init} name="Início" />
-<InputDate bind:field={end} name="Fim" />
-<button>Processar</button>
+<InputDate bind:field={init} name="Data de Início" />
+<InputDate bind:field={end} name="Data de Fim" />
+<button on:click={processHandler}>Processar</button>
 
 {#if orders.length > 0}
     <div class="order-list">
