@@ -75,7 +75,7 @@
 <p class="title">Editar Produto</p>
 
 <div class="products">
-    <InputText bind:field={term} on:enter={search} showLabel={false} name="Procurar Produto"/>
+    <InputText bind:field={term} on:enter={search} name="Digite abaixo o que deseja procurar"/>
     <button on:click={search}>BUSCAR</button>
     <button on:click={all}>MOSTRAR TODOS</button>
 </div>

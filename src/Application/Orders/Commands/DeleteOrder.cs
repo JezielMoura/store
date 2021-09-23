@@ -21,7 +21,7 @@ public class DeleteOrderHandler : AsyncRequestHandler<DeleteOrder>
     {
         var order = await _context.Orders.FindAsync(command.Id);
 
-        _context.Orders.Update(order);
+        _context.Orders.Remove(order);
         await _context.SaveChangesAsync(token);
     }
 }

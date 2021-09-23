@@ -42,7 +42,7 @@ public class OrderController : ControllerBase
     public async Task Edit(ChangeOrder command)
         => await _mediator.Send(command);
 
-    [HttpDelete]
-    public async Task Delete(DeleteOrder command)
-        => await _mediator.Send(command);
+    [HttpGet("delete/{id}")]
+    public async Task Delete(Guid id)
+        => await _mediator.Send(new DeleteOrder(id));
 }

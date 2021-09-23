@@ -22,6 +22,14 @@ let ordersService = {
 
         return null;
     },
+    delete: async (id) => {
+        let response =  await fetch(`${url}/order/delete/${id}`);
+
+        if (response.status ==  200) 
+            return true
+            
+        return false
+    },
     today: async () => {
         let response =  await fetch(`${url}/order/today`);
         let ordersToday = [];
