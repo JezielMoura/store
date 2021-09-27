@@ -1,15 +1,12 @@
 <script>    
     import currency from "../../helpers/currency.js";
     import date from "../../helpers/date.js";
-    import OrderService from '../../services/orders-service.js';
     import InputDate from '../../components/inputDate.svelte';
-import ordersService from "../../services/orders-service.js";
+    import ordersService from "../../services/orders-service.js";
 
     let orders = [];
     let totalValue = 0.00;
-    let selectedOrder;
-    let init;
-    let end;
+    let selectedOrder, init, end;
 
     const handleKeydown = (e) => {
         if (e.key == 'Escape') 
@@ -17,7 +14,7 @@ import ordersService from "../../services/orders-service.js";
     }
 
     const select = async (order) => {
-        selectedOrder = await OrderService.get(order.id);
+        selectedOrder = await ordersService.get(order.id);
         console.log(selectedOrder)
     }
 
@@ -25,7 +22,7 @@ import ordersService from "../../services/orders-service.js";
         const conf = confirm("Deseja mesmo cancelar a venda?");
         if (!conf) return
 
-        let sucess = await OrderService.delete(order.id);
+        let sucess = await ordersService.delete(order.id);
         if (sucess) {
             alert("Venda cancelada")
             orders = await ordersService.getByRangeDate(init, end);
@@ -35,7 +32,7 @@ import ordersService from "../../services/orders-service.js";
     }
 
     const processHandler = async () => {
-        orders = await OrderService.getByRangeDate(init, end);
+        orders = await ordersService.getByRangeDate(init, end);
 
         totalValue = 0.00;
 
@@ -48,7 +45,7 @@ import ordersService from "../../services/orders-service.js";
 
 <svelte:window on:keydown={handleKeydown} />
 
-<p class="title">Vendas do Dia</p>
+<p class="title">Vendas por Período</p>
 
 <InputDate bind:field={init} name="Data de Início" />
 <InputDate bind:field={end} name="Data de Fim" />
