@@ -1,7 +1,8 @@
+import preprocess from "svelte-preprocess";
 import adapter from '@sveltejs/adapter-static';
 
 const config = {
-	kit: {
+    kit: {
 		adapter: adapter({ pages: 'dist', assets: 'dist' }),
 		target: '#svelte',
         files: {
@@ -20,7 +21,10 @@ const config = {
 				}
 			}
 		}
-}
+	},
+    preprocess: [preprocess({
+        postcss: true
+    })]
 };
 
 export default config;

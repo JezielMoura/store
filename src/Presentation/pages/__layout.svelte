@@ -5,6 +5,7 @@
 <script>
     import Header from "../components/header.svelte";
     import Nav from "../components/nav.svelte";
+    import "../app.postcss";
 </script>
 
 <svelte:head>
@@ -13,10 +14,7 @@
 
 <Header/>
 <Nav/>
+
 <main>
     <slot></slot>
 </main>
-
-<style>
-    
-</style>
