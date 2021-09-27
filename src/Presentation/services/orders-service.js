@@ -1,8 +1,6 @@
-import url from '../helpers/url';
-
 let ordersService = {
     send: async (items) => {
-        let response = await fetch(`${url}/order`, {
+        let response = await fetch(`/api/order`, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -15,7 +13,7 @@ let ordersService = {
         return sucess;
     },
     get: async (id) => {
-        let response =  await fetch(`${url}/order/${id}`);
+        let response =  await fetch(`/api/order/${id}`);
 
         if (response.status ==  200)
             return await response.json();
@@ -23,7 +21,7 @@ let ordersService = {
         return null;
     },
     delete: async (id) => {
-        let response =  await fetch(`${url}/order/delete/${id}`);
+        let response =  await fetch(`/api/order/delete/${id}`);
 
         if (response.status ==  200) 
             return true
@@ -31,7 +29,7 @@ let ordersService = {
         return false
     },
     today: async () => {
-        let response =  await fetch(`${url}/order/today`);
+        let response =  await fetch(`/api/order/today`);
         let ordersToday = [];
 
         if (response.status ==  200)
@@ -40,7 +38,7 @@ let ordersService = {
         return ordersToday;
     },
     getByRangeDate: async (init, end) => {
-        let response =  await fetch(`${url}/order/${init}/${end}`);
+        let response =  await fetch(`/api/order/${init}/${end}`);
         let ordersByRangeDate = [];
 
         if (response.status ==  200)

@@ -1,53 +1,51 @@
-global using Mobnet.Store.Infrastructure.Extensions;
-global using Serilog.Formatting.Compact;
-global using Mobnet.Store.Application.Common.Extensions;
-global using Serilog;
-global using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 var builder = WebApplication.CreateBuilder(args);
-
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Console()
-    .WriteTo.File(new CompactJsonFormatter(), "logs/store.json", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddControllers().AddJsonOptions(options 
-    => options.JsonSerializerOptions.ReferenceHandler  = ReferenceHandler.IgnoreCycles);
-
-builder.Services.AddCors( options =>
-    options.AddPolicy("Cors", builder => builder
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .SetIsOriginAllowed(o => true)
-        .AllowCredentials()
-    )
-);
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(c 
-    => c.SwaggerDoc("v1", new() { Title = "Mobnet Store", Version = "v1" }));
 
 var app = builder.Build();
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mobnet Store"));
-}
-
-app.UseCors("Cors");
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.ConfigureExceptionHandler();
-app.UseRouting();
-app.UseEndpoints(route => route.MapControllers());
+
+app.MapGet("/api/product", (IMediator mediator) 
+    => mediator.Send(new GetAllProducts()));
+
+app.MapGet("/api/product/{code}", (IMediator mediator, long code) 
+    => mediator.Send(new GetProductById{Code = code}));
+
+app.MapGet("/api/product/search/{term}", (IMediator mediator, string term) 
+    => mediator.Send(new GetProductByName{Name = term}));
+
+app.MapPost("/api/product", (IMediator mediator, AddProduct command) 
+    => mediator.Send(command));
+
+app.MapPut("/api/product", (IMediator mediator) 
+    => mediator.Send(new GetAllProducts()));
+
+app.MapGet("/api/product/delete", (IMediator mediator, long code) 
+    => mediator.Send(new DeleteProduct(code)));
+
+app.MapGet("/api/order", (IMediator mediator) 
+    => mediator.Send(new GetAllOrders()));
+
+app.MapGet("/api/order/{id}", (IMediator mediator, Guid id) 
+    => mediator.Send(new GetOrderById(id)));
+
+app.MapGet("/api/order/today", (IMediator mediator) 
+    => mediator.Send(new GetOrderToday()));
+
+app.MapGet("/api/order/{init}/{end}", (IMediator mediator, DateTime init, DateTime end) 
+    => mediator.Send(new GetOrderByRangeDate(init, end)));
+
+app.MapPost("/api/order", (IMediator mediator, ProcessOrder command) 
+    => mediator.Send(command));
+
+app.MapPut("/api/order", (IMediator mediator, ChangeOrder command) 
+    => mediator.Send(command));
+
+app.MapGet("/api/order/delete/{id}", (IMediator mediator, Guid id) 
+    => mediator.Send(new DeleteOrder(id)));
 
 app.Run();

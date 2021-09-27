@@ -23,8 +23,7 @@ public class GetOrderByIdHandler : IRequestHandler<GetOrderById, Order>
     public async Task<Order> Handle(GetOrderById request, CancellationToken cancellationToken)
     {
         return await _context.Orders
-            .Include(order => order.Items)
+            .Include(o => o.Items)
             .FirstOrDefaultAsync(c => c.Id == request.id);
-
     }
 }

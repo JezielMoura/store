@@ -1,1 +1,3 @@
-dotnet watch --project "src/Presentation"
+cd src/Presentation
+dotnet watch
+cd ../../

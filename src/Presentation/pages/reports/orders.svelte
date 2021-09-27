@@ -3,6 +3,7 @@
     import date from "../../helpers/date.js";
     import OrderService from '../../services/orders-service.js';
     import InputDate from '../../components/inputDate.svelte';
+import ordersService from "../../services/orders-service.js";
 
     let orders = [];
     let totalValue = 0.00;
@@ -18,6 +19,19 @@
     const select = async (order) => {
         selectedOrder = await OrderService.get(order.id);
         console.log(selectedOrder)
+    }
+
+    const cancel = async (order) => {
+        const conf = confirm("Deseja mesmo cancelar a venda?");
+        if (!conf) return
+
+        let sucess = await OrderService.delete(order.id);
+        if (sucess) {
+            alert("Venda cancelada")
+            orders = await ordersService.getByRangeDate(init, end);
+        } else {
+            alert("Erro ao tentar cancelar venda")
+        }
     }
 
     const processHandler = async () => {
@@ -43,20 +57,27 @@
 {#if orders.length > 0}
     <div class="order-list">
         <div class="order">
-            <p class="w1">Data</p>
-            <p class="w2">Valor</p>
+            <div><p>Data</p></div>
+            <div><p>Valor</p></div>
+            <div></div>
+            <div></div>
         </div>
         {#each orders as order}
-            <div class="order body" on:click={() => select(order)}>
-                <p class="w1">{date(order.created)}</p>
-                <p class="w2">{currency(order.value)}</p>
+            <div class="order">
+                <div><p>{date(order.created)}</p></div>
+                <div><p>{currency(order.value)}</p></div>
+                <div>
+                    <button on:click={() => cancel(order)} class="bg-error">CANCELAR</button>
+                </div>
+                <div>
+                    <button on:click={() => select(order)}>VER</button>
+                </div>
             </div>
         {/each}
     </div>
 {/if}
-
 <div class="value bg-info">
-    <p>TOTAL VENDAS DO DIA</p>
+    <p>TOTAL DAS VENDAS DO PERÍODO</p>
     <p>{currency(totalValue)}</p>
 </div>
 
@@ -83,23 +104,20 @@
 
 
 <style>
+
     .order-list { 
         padding: 15px 20px; width: 100%; background: #fff; box-shadow: 0px 0px 4px #eee; }
 
         .order { 
-            width: 100%; border-bottom: 1px solid #eee; padding: 3px 5px; }
-
-        .body:hover { 
-            background: #eee; transition: ease-in-out 250ms; cursor: pointer;}
+            width: 100%; border-bottom: 1px solid #eee; padding: 3px 5px; display: flex; 
+            justify-content: space-between; align-items: center; }
 
             .order p { 
                 display: inline-block; font-size: 12px; font-weight: 500;}
 
-                .order .w1 {
-                    width: 85%;}
+            .order div {
+                width: 100%; margin: 0 2%;}
 
-                .order .w2 { 
-                    width: 14%;}
 
     .value { 
         width: 100%; height: 80px; background: #3975EA; border-radius: 5px; margin-top: 20px; display: flex; 

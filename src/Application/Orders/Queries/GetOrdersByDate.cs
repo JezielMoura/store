@@ -24,7 +24,8 @@ public class GetOrderByRangeDateHandler : IRequestHandler<GetOrderByRangeDate, I
     public async Task<IEnumerable<Order>> Handle(GetOrderByRangeDate request, CancellationToken token)
     {
         return await _context.Orders
-            .Where(c => c.Created.Date >=  request.Init.Date && c.Created.Date <= request.End.Date )
+            .Where(c => c.Created.Date >=  request.Init.Date && c.Created.Date <= request.End.Date)
+            .OrderByDescending(c => c.Created)
             .ToListAsync();
     }
 }

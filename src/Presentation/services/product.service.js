@@ -1,16 +1,14 @@
-import urlBase from "../helpers/url";
-
 let ProductService = {
     all: async () => {
-        let response = await fetch(`${urlBase}/product`)
+        let response = await fetch(`/api/product`)
         return await response.json();
     },
     find: async (code) => {
-        let response = await fetch(`${urlBase}/product/${code}`)
+        let response = await fetch(`/api/product/${code}`)
         return await response.json();
     },
     search: async (description) => {
-        let response = await fetch(`${urlBase}/product/search/${description}`)
+        let response = await fetch(`/api/product/search/${description}`)
         if (response.status == 200) 
             return await response.json();
 
@@ -19,7 +17,7 @@ let ProductService = {
         return [];
     },
     add: async (product) => {
-        let response = await fetch(`${urlBase}/product`, {
+        let response = await fetch(`/api/product`, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -33,7 +31,7 @@ let ProductService = {
         }
     },
     edit: async (product) => {
-        let response = await fetch(`${urlBase}/product`, {
+        let response = await fetch(`/api/product`, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -47,7 +45,7 @@ let ProductService = {
         }
     },
     delete: async (id) => {
-        let response = await fetch(`${urlBase}/product/delete/${id}`);
+        let response = await fetch(`/api/product/delete/${id}`);
 
         if (response.status == 200)
             return true
