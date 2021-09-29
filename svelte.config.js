@@ -3,7 +3,7 @@ import adapter from '@sveltejs/adapter-static';
 
 const config = {
     kit: {
-		adapter: adapter({ pages: 'dist/wwwroot', assets: 'dist/wwwroot' }),
+		adapter: adapter({ pages: 'dist', assets: 'dist' }),
 		target: '#svelte',
         files: {
 			assets: 'src/Presentation/assets',
