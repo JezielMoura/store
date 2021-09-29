@@ -6,10 +6,11 @@
     <RootNamespace>Mobnet.Store.Presentation</RootNamespace>
     <AssemblyName>Mobnet.Store.Presentation</AssemblyName>
   </PropertyGroup>
-
-  <Target Name="MessageBeforePublish" BeforeTargets="BeforePublish">
+  <!-- 
+    <Target Name="MessageBeforePublish" BeforeTargets="BeforePublish">
     <Exec Command="npm run build"/>
-  </Target>
+  </Target> 
+  -->
 
   <ItemGroup>
     <Using Include="MediatR" />
