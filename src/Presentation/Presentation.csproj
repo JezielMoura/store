@@ -6,11 +6,6 @@
     <RootNamespace>Mobnet.Store.Presentation</RootNamespace>
     <AssemblyName>Mobnet.Store.Presentation</AssemblyName>
   </PropertyGroup>
-  <!-- 
-    <Target Name="MessageBeforePublish" BeforeTargets="BeforePublish">
-    <Exec Command="npm run build"/>
-  </Target> 
-  -->
 
   <ItemGroup>
     <Using Include="MediatR" />
@@ -26,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.3" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>

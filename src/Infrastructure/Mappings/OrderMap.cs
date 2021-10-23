@@ -1,7 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mobnet.Store.Domain.Entities;
-
 namespace Mobnet.Store.Infrastructure.Mappings;
 
 public class OrderMap : IEntityTypeConfiguration<Order>

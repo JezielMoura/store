@@ -1,7 +1,3 @@
-using Mobnet.Store.Domain.Entities;
-using System;
-using System.Collections.Generic;
-
 namespace Mobnet.Store.Infrastructure.Persistence;
 
 public static class StoreContextSeed

@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-
 namespace Mobnet.Store.Infrastructure.Persistence;
 
 public class StoreContextFactory : IDesignTimeDbContextFactory<StoreContext>
