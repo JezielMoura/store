@@ -1,3 +1,7 @@
+using System.Text.Json;
+using Mobnet.Store.Domain.Entities;
+using Mobnet.Store.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
@@ -8,6 +12,40 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.ConfigureExceptionHandler();
+
+app.MapGet("/export", async (IMediator mediator) => {
+
+    var products = await mediator.Send(new GetAllProducts());
+    var orders = await mediator.Send(new GetAllOrders());
+    var pgContext = new StoreContextPostgres();
+
+    foreach (var item in products)
+    {
+        var c = DateTime.SpecifyKind(item.Created, DateTimeKind.Utc);
+        var m = DateTime.SpecifyKind(item.LastModified, DateTimeKind.Utc);
+
+        item.Created = c;
+        item.LastModified = m;
+
+        pgContext.Products.Add(item);
+    }
+
+    foreach (var item in orders)
+    {
+        var c = DateTime.SpecifyKind(item.Created, DateTimeKind.Utc);
+        var m = DateTime.SpecifyKind(item.LastModified, DateTimeKind.Utc);
+
+        item.Created = c;
+        item.LastModified = m;
+        
+        pgContext.Add(item);
+    }
+
+    pgContext.SaveChanges();
+
+    return Results.Ok(pgContext.Products.ToList().Count());
+});
+
 
 app.MapGet("/api/product", (IMediator mediator) 
     => mediator.Send(new GetAllProducts()));

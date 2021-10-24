@@ -16,8 +16,8 @@ public abstract class Entity
     }
 
     public Guid Id { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime LastModified { get; set; }
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+    public DateTime LastModified { get; set; } = DateTime.UtcNow;
 
     public override bool Equals(object? obj)
     {

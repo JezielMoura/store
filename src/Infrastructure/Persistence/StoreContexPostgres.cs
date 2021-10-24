@@ -11,15 +11,24 @@ using Mobnet.Store.Domain.Shared;
 
 namespace Mobnet.Store.Infrastructure.Persistence;
 
-public class StoreContext : DbContext, IStoreContext
+public class StoreContextPostgres : DbContext
 {
-    public StoreContext(DbContextOptions options) : base(options)
+    public StoreContextPostgres()
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
     }
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Order> Orders { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql("server=localhost;database=store;User Id=postgres;password=mbnt1645");
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+        base.OnConfiguring(optionsBuilder);
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -35,10 +44,10 @@ public class StoreContext : DbContext, IStoreContext
         foreach (var entry in ChangeTracker.Entries<Entity>())
         {
             if (entry.State == EntityState.Added)
-                entry.Entity.Created = DateTime.UtcNow;
+                entry.Entity.Created = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
 
             if (entry.State == EntityState.Modified)
-                entry.Entity.LastModified = DateTime.UtcNow;
+                entry.Entity.LastModified = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
         }
 
         return await base.SaveChangesAsync(cancellationToken);
