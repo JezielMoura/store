@@ -4,7 +4,6 @@ class Order {
     item = new Item();
     items = [];
     total = 0.00;
-
     add (item) {
         this.items.push(item)
     }

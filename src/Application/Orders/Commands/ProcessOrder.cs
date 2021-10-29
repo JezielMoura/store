@@ -29,13 +29,11 @@ public class ProcessOrderHandler : AsyncRequestHandler<ProcessOrder>
         {
             var product = _context.Products.Find(item.ProductId);
 
-            if (product is not null)
-            {
-                product.RetireStock(item.Quantity);
-                _context.Products.Update(product);
-            }
+            if (product is null) return;
 
-            order.AddItem(item);
+            product.RetireStock(item.Quantity);
+            _context.Products.Update(product);
+            order.AddItem(new OrderItem(product.Id, order.Id, product.Name, product.Price, item.Quantity, product.MaxDiscount, item.Discount));
         }
 
         _context.Orders.Add(order);
